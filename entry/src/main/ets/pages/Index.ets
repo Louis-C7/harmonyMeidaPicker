@@ -43,10 +43,10 @@ struct Index {
           .onClick(()=>{
             grantPermission(getContext(this)).then(res => {
               if (!res) { throw 'user reject granted'}
-              console.info(`权限申请成功  ${JSON.stringify(res)}`);
+              console.info(`grantPermission success: ${JSON.stringify(res)}`);
               let PhotoSelectOptions = new picker.PhotoSelectOptions();
-              PhotoSelectOptions.MIMEType = picker.PhotoViewMIMETypes.IMAGE_TYPE;
-              PhotoSelectOptions.maxSelectNumber = 1;
+              PhotoSelectOptions.MIMEType = picker.PhotoViewMIMETypes.VIDEO_TYPE;
+              PhotoSelectOptions.maxSelectNumber = 2;
               let photoPicker = new picker.PhotoViewPicker();
               photoPicker.select(PhotoSelectOptions).then((PhotoSelectResult) => {
                 console.info('applog:'+PhotoSelectResult.photoUris);
