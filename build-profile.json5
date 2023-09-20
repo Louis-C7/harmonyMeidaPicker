@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\chenl\\.ohos\\config\\auto_debug_harmonyMeidaPicker_com.example.pickertest_2850086000392591469.cer",
+          "storePassword": "0000001B7A9CDD25F5C78B597134021CB1942BC03FAD3AF9D847E1FE241FA915AED1039646F256755C49F2",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B1ED22A719A9A8D9E8C6D4172D9311513FC773C07A741F8C97E4825DFDDA7BC03F3E8032C45D4E2",
+          "profile": "C:\\Users\\chenl\\.ohos\\config\\auto_debug_harmonyMeidaPicker_com.example.pickertest_2850086000392591469.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\chenl\\.ohos\\config\\auto_debug_harmonyMeidaPicker_com.example.pickertest_2850086000392591469.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [

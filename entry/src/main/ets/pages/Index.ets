@@ -4,6 +4,8 @@ import bundleManager from '@ohos.bundle.bundleManager';
 import abilityAccessCtrl from '@ohos.abilityAccessCtrl';
 import type { Permissions } from '@ohos.abilityAccessCtrl';
 const TAG: string = '[Permission]';
+import Want from '@ohos.app.ability.Want'
+import common from "@ohos.app.ability.common"
 
 const PERMISSIONS: Array<Permissions> = [
   'ohos.permission.CAMERA',
@@ -30,16 +32,30 @@ struct Index {
     // }).catch(rej => {
     //   console.info(`权限申请失败  ${JSON.stringify(rej)}`);
     // })
+  }
 
+  startAbilityTest(type, action) {
+    let context = getContext(this) as common.UIAbilityContext
+    let want = {
+      "deviceId": "",
+      "bundleName": "",
+      "abilityName": "",
+      "uri": "",
+      "type": type,
+      "action": action,
+      "parameters": {},
+      "entities": []
+    };
+    context.startAbility(want)
   }
 
   build() {
     Row() {
-      Column() {
+      Column({space:10}) {
         Text(this.message)
           .fontSize(50)
           .fontWeight(FontWeight.Bold)
-        Button("选择文件").width('80%')
+        Button("选择媒体").width('80%')
           .onClick(()=>{
             grantPermission(getContext(this)).then(res => {
               if (!res) { throw 'user reject granted'}
@@ -59,6 +75,37 @@ struct Index {
               console.info(`grantPermission fail: ${JSON.stringify(rej)}`);
             })
           })
+        Button("选择文件").width('80%')
+          .onClick(()=>{
+            grantPermission(getContext(this)).then(res => {
+              if (!res) { throw 'user reject granted'}
+              console.info(`grantPermission success: ${JSON.stringify(res)}`);
+              let DocumentSelectOptions = new picker.DocumentSelectOptions();
+              // DocumentSelectOptions;
+              // DocumentSelectOptions.maxSelectNumber = 2;
+              let documentPicker = new picker.DocumentViewPicker();
+              documentPicker.select(DocumentSelectOptions).then((DocumentSelectResult) => {
+                console.info(`Document Select success: ${JSON.stringify(DocumentSelectResult)}`);
+              }).catch((err) => {
+                console.error('PhotoViewPicker.select failed with err: ' + err);
+              });
+            }).catch(rej => {
+              console.info(`grantPermission fail: ${JSON.stringify(rej)}`);
+            })
+          })
+        Button("want选择图片").width('80%')
+          .onClick(()=>{
+            this.startAbilityTest("image/*", "ohos.action.choose")
+          })
+        Button("want选择视频").width('80%')
+          .onClick(()=>{
+            this.startAbilityTest("video/*", "ohos.action.fileSelect")
+          })
+        Button("want选择图片和视频").width('80%')
+          .onClick(()=>{
+            this.startAbilityTest("*/*", "ohos.action.fileSelect")
+          })
+
       }
       .width('100%')
     }
